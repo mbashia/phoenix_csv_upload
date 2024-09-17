@@ -4,7 +4,7 @@ defmodule PhoenixCsvUpload.Importer do
 
   def preview(rows) do
     rows
-    |> Enum.take(5)
+    # |> Enum.take(5)
     |> transform_keys()
     |> Enum.map(fn attrs ->
       Customers.change_customer(%Customer{}, attrs)
@@ -22,12 +22,15 @@ defmodule PhoenixCsvUpload.Importer do
 
   # "First Name" => "first_name"
   defp transform_keys(rows) do
+    IO.inspect(rows, label: "untransformed rows")
+
     rows
     |> Enum.map(fn row ->
       Enum.reduce(row, %{}, fn {key, val}, map ->
         Map.put(map, underscore_key(key), val)
       end)
     end)
+    |> IO.inspect(label: "transformed rows")
   end
 
   defp underscore_key(key) do

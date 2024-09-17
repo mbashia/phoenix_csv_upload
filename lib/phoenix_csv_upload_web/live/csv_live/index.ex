@@ -16,6 +16,18 @@ defmodule PhoenixCsvUploadWeb.CsvLive.Index do
     {:noreply, socket}
   end
 
+  @impl true
+  def handle_event("reset", _, socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:parsed_rows, [])
+      |> assign(:imported_customers, [])
+      |> assign(:sample_customers, [])
+      |> assign(:uploaded_files, [])
+    }
+  end
+
   def handle_event("parse", _, socket) do
     parsed_rows = parse_csv(socket)
 
@@ -30,6 +42,7 @@ defmodule PhoenixCsvUploadWeb.CsvLive.Index do
 
   def handle_event("import", _, socket) do
     imported_customers = Importer.import(socket.assigns.parsed_rows)
+    IO.inspect(imported_customers)
 
     {
       :noreply,
