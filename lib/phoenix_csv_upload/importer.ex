@@ -1,11 +1,14 @@
 defmodule PhoenixCsvUpload.Importer do
+  alias PhoenixCsvUpload.Customers
+  alias PhoenixCsvUpload.Customers.Customer
+
   def preview(rows) do
     rows
     |> Enum.take(5)
     |> transform_keys()
     |> Enum.map(fn attrs ->
-    #   Customers.change_customer(%Customer{}, attrs)
-    #   |> Ecto.Changeset.apply_changes()
+      Customers.change_customer(%Customer{}, attrs)
+      |> Ecto.Changeset.apply_changes()
     end)
   end
 
@@ -13,7 +16,7 @@ defmodule PhoenixCsvUpload.Importer do
     rows
     |> transform_keys()
     |> Enum.map(fn attrs ->
-    #   Customers.create_customer(attrs)
+      Customers.create_customer(attrs)
     end)
   end
 

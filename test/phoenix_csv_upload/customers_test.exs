@@ -35,7 +35,12 @@ defmodule PhoenixCsvUpload.CustomersTest do
 
     test "update_customer/2 with valid data updates the customer" do
       customer = customer_fixture()
-      update_attrs = %{email: "some updated email", name: "some updated name", phone_number: "some updated phone_number"}
+
+      update_attrs = %{
+        email: "some updated email",
+        name: "some updated name",
+        phone_number: "some updated phone_number"
+      }
 
       assert {:ok, %Customer{} = customer} = Customers.update_customer(customer, update_attrs)
       assert customer.email == "some updated email"

@@ -5,7 +5,11 @@ defmodule PhoenixCsvUploadWeb.CustomerLiveTest do
   import PhoenixCsvUpload.CustomersFixtures
 
   @create_attrs %{email: "some email", name: "some name", phone_number: "some phone_number"}
-  @update_attrs %{email: "some updated email", name: "some updated name", phone_number: "some updated phone_number"}
+  @update_attrs %{
+    email: "some updated email",
+    name: "some updated name",
+    phone_number: "some updated phone_number"
+  }
   @invalid_attrs %{email: nil, name: nil, phone_number: nil}
 
   defp create_customer(_) do
