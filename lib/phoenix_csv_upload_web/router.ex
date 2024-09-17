@@ -17,7 +17,8 @@ defmodule PhoenixCsvUploadWeb.Router do
   scope "/", PhoenixCsvUploadWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/page", PageController, :home
+    live "/", CsvLive.Index
   end
 
   # Other scopes may use custom stacks.

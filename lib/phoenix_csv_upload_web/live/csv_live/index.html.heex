@@ -1,3 +1,45 @@
 <div>
-  This is the csv page
+  <.header>
+    Import Customers
+    <:subtitle>
+      Open up the file below in Excel, Google sheets or a similar
+    </:subtitle>
+  </.header>
+
+  <div class="my-12">
+    <form
+      :if={length(@parsed_rows) == 0}
+      id="upload-form"
+      phx-submit="parse"
+      phx-change="validate"
+      class="space-y-2"
+    >
+      <div class="p-4 border border-zinc-200 rounded" phx-drop-target={@uploads.sample_csv.ref}>
+        <.live_file_input upload={@uploads.sample_csv} />
+      </div>
+      <.button type="submit">Upload</.button>
+    </form>
+    <div :if={length(@parsed_rows) > 0} class="flex items-center space-x-2">
+      <h3 class="text-base font-semibold">Upload a new csv file</h3>
+      <.button type="button" phx-click="reset">Reset</.button>
+    </div>
+  </div>
+
+  <div :if={@sample_customers != []} class="space-y-2">
+    <h3 class="text-xl font-bold">Preview</h3>
+    <.table id="customers" rows={@sample_customers}>
+      <:col :let={customer} label="First name"><%= customer.name %></:col>
+      <:col :let={customer} label="Last name"><%= customer.email %></:col>
+      <:col :let={customer} label="Email"><%= customer.phone_number %></:col>
+      <:col :let={customer} label="Phone"><%= customer.specialization %></:col>
+    </.table>
+    <p>This is a sample of the data to import</p>
+    <.button type="button" phx-click="import">Import Now</.button>
+  </div>
+
+  <div :if={@imported_customers != []} class="space-y-2">
+    <h3 class="text-xl font-bold">Import Result</h3>
+    <p>Success: <%= length(for {:ok, _} = row <- @imported_customers, do: row) %> imports</p>
+    <p>Failed: <%= length(for {:error, _} = row <- @imported_customers, do: row) %> imports</p>
+  </div>
 </div>
